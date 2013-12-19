@@ -424,8 +424,25 @@ for key in dict_cluster.keys():
 	#dict_rmsd[(key, number_iteration + 1)] = rmsd_
 
 
+def distance_dict_computation(configuration):
+	d_ = dict()
+	dict_point_ = dict()
+	for i in range(len(list_vertices)):
+		x_1, y_1, z_1 = configuration[i,:][0], configuration[i,:][1], configuration[i,:][2]
+		dict_point_[list_vertices[i]] = Point(list_vertices[i], x_1, y_1, z_1)
+	for key_1  in dict_point_.keys():
+		for key_2 in dict_point_.keys():
+			d_[(key_1, key_2)] = math.sqrt((dict_point_[key_1].x - dict_point_[key_2].x)**2+\
+				(dict_point_[key_1].y - dict_point_[key_2].y)**2 +\
+				(dict_point_[key_1].z - dict_point_[key_2].z)**2)
+	return d_ 
 
-def 
+def frobenius_norm(d_1, d_2):
+	sum = 0.0
+	for i in range(len(list_vertices)):
+		for k in range(len(list_vertices)):
+			sum+= (d_1[(list_vertices[i], list_vertices[k])] - d_2[(list_vertices[i], list_vertices[k])])**2
+	return sum
 
 
 
