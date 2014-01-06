@@ -17,3 +17,5 @@ def comparing_distance_matrix(d_new,d):
   sum = sum/2.0
   return sum
   
+def update_distance_matrix():
+  pass
