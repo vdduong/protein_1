@@ -225,7 +225,7 @@ def distance_matrix_generation(configuration):
       (dict_constructed[key_1].z - dict_constructed[key_2].z)**2)
   return distance_matrix_gen
   
-def harmonic_diff_matrix(d_1, d_2):
+def harmonic_diff(d_1, d_2):
   """ returning the harmonic difference between two distance matrix
   especially against the initial distance matrix"""
   harmonic_diff = {}
@@ -233,15 +233,30 @@ def harmonic_diff_matrix(d_1, d_2):
     harmonic_diff[key] = (d_1[key] - d_2[key])**2
   return harmonic_diff
     
-def frobenius_norm(d_1, d_2):
+def frobenius_norm(harmonic_diff):
   """return the frobenius norm between two distance matrix """
-  harmonic_diff = harmonic_diff_matrix(d_1, d_2)
+  #harmonic_diff = harmonic_diff_matrix(d_1, d_2)
   sum = 0.0
   for key in harmonic_diff.keys():
     sum+= harmonic_diff[key]
   return math.sqrt(sum)/float(len(harmonic_diff.keys()))
   
 ##################  
+def new_distance_matrix(dict_model):
+  """finding consensus new distance matrix from different configurations """
+  global vertices
+  matrix_sum = {}
+  for key_model in dict_model.keys():
+  	configuration = dict_model[key_model]
+  	distance_matrix_constructed = distance_matrix_generation(configuration)
+  	harmonic_diff_matrix = harmonic_diff(distance_matrix_constructed, distance_matrix_trunc)
+  	frobenius_norm_local = frobenius_norm(harmonic_diff_matrix)
+  	for i in list_vertices:
+  		for j in list_vertices:
+  			matrix_sum[(list_vertices[i], list_vertices[j])] = \
+  				distance_matrix_constructed[(list_vertices[i], list_vertices[j])]*\
+  				
+  pass
   
   
   
@@ -250,8 +265,13 @@ def frobenius_norm(d_1, d_2):
   
   
   
-  
-  
+###################
+# application
+
+distance_matrix_trunc = fw_algo(vertices, distance_matrix_trunc) # complet the truncated matrix
+number_iteration = 10
+dict_model = iteration_procedure(distance_matrix_trunc, number_iteration)
+
   
   
   
