@@ -245,7 +245,9 @@ def frobenius_norm(harmonic_diff):
 def new_distance_matrix(dict_model):
   """finding consensus new distance matrix from different configurations """
   global vertices
+  new_distance_matrix = {}
   matrix_sum = {}
+  count = 0
   for key_model in dict_model.keys():
   	configuration = dict_model[key_model]
   	distance_matrix_constructed = distance_matrix_generation(configuration)
@@ -255,8 +257,12 @@ def new_distance_matrix(dict_model):
   		for j in list_vertices:
   			matrix_sum[(list_vertices[i], list_vertices[j])] = \
   				distance_matrix_constructed[(list_vertices[i], list_vertices[j])]*\
+  				exp(-harmonic_diff_matrix[(list_vertices[i], list_vertices[j])]/\
+  						frobenius_norm_local)
+  	count+=1
+  new_distance_matrix = matrix_sum/count
+  return new_distance_matrix
   				
-  pass
   
   
   
