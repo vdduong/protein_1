@@ -51,7 +51,7 @@ for line in file:
     coord_y = float(line[7])
     coord_z = float(line[8])
     coord = Point(name, coord_x, coord_y, coord_z)
-    dict_coord_complet[name] = point
+    dict_coord_complet[name] = coord
   else:
     continue
 
@@ -74,7 +74,7 @@ for line in full_matrix_file:
 
 ###################
 
-def fw_algo(vertices, dict_distance):
+def fw_algo(dict_distance):
   """run the FW algorithm to generate the temporary complet distance matrix from
   the truncated one """
   global vertices
@@ -166,8 +166,8 @@ for key in list_vertices:
   coord_D = [x_D, y_D, z_D]
   D_complet.append(np.array(coord_D))
 D_complet = np.array(D_complet)
-Dc_complet = centroid(D_complet
-D-=Dc_complet # turn the perfect cloud configuration around its centroid
+Dc_complet = centroid(D_complet)
+D_complet-=Dc_complet # turn the perfect cloud configuration around its centroid
 
 #####################################
 
@@ -264,19 +264,14 @@ def new_distance_matrix(dict_model):
   return new_distance_matrix
   				
   
-  
-  
-  
-  
-  
-  
-  
 ###################
 # application
 
-distance_matrix_trunc = fw_algo(vertices, distance_matrix_trunc) # complet the truncated matrix
+distance_matrix_trunc = fw_algo(distance_matrix_trunc) # complet the truncated matrix
 number_iteration = 10
 dict_model = iteration_procedure(distance_matrix_trunc, number_iteration)
+distance_matrix_1 = new_distance_matrix(dict_model)
+harm_diff = harmonic_diff(distance_matrix_1, distance_matrix_trunc)
 
   
   
