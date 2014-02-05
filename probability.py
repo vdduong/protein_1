@@ -1,31 +1,26 @@
-def prob_sheet_1(name_pair):
-	global distance_matrix_HH
-	mean_distance = 4.29
-	tol_distance = 0.5
-	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
-
-def prob_sheet_2(name_pair):
-	global distance_matrix_HH
-	mean_distance = 6.64
-	tol_distance = 0.61
-	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
+#######
+# defining different distance probability for the alpha helix secondary structure 
 
 def prob_helix_1(name_pair):
+	'''probability of the distance between HN i and HN i+1'''
 	mean_distance = 2.80
 	tol_distance = 0.31
 	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
 
 def prob_helix_2(name_pair):
+	'''probability of the distance between HN i and HN i+2'''
 	mean_distance = 4.33
 	tol_distance = 0.33
 	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
 
 def prob_helix_3(name_pair):
+	'''probability of the distance between HN i and HN i+3'''
 	mean_distance = 4.88
 	tol_distance = 0.33
 	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
 
 def prob_helix_4(name_pair):
+	'''probability of the distance between HN i and HN i+4'''
 	mean_distance = 6.35
 	tol_distance = 0.93
 	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
