@@ -51,17 +51,28 @@ for key in dict_distance_bb.keys():
 
 distance_matrix_HH = dict_distance_bb
 
-def prob_sheet_1(name_pair):
+### probability chain for beta sheet structure
+
+def prob_sheet_HN_HN_1(name_pair):
 	global distance_matrix_HH
 	mean_distance = 4.29
 	tol_distance = 0.5
 	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
 
-def prob_sheet_2(name_pair):
+def prob_sheet_HN_HN_2(name_pair):
 	global distance_matrix_HH
 	mean_distance = 6.64
 	tol_distance = 0.61
 	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
+
+def prob_sheet_HA_i_HA_j(name_pair):
+	'''probability of the distance between HA i and HA j in an anti parallel beta sheet structure'''
+	global distance_matrix_HH
+	mean_distance = 7.30
+	tol_distance = 0.42
+	return math.exp(-0.5*(distance_matrix_HH[name_pair]-mean_distance)**2/tol_distance**2)
+
+### probability chain for helix alpha structure
 
 def prob_helix_1(name_pair):
 	mean_distance = 2.80
@@ -264,6 +275,7 @@ def prob_HN_HB_i_4(name_pair):
 	tol_distance = 0.70
 	return math.exp(-0.5*(distance_matrix[name_pair]-mean_distance)**2/tol_distance**2)
 
+#############
 
 def fragment_score(name_pair, relation):
 	'''define fragment score based on network anchoring '''
