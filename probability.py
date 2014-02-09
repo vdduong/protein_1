@@ -1,6 +1,5 @@
 #######
 # defining different distance probability for the alpha helix secondary structure 
-
 def prob_helix_1(name_pair):
 	'''probability of the distance between HN i and HN i+1'''
 	mean_distance = 2.80
@@ -205,3 +204,92 @@ def prob_HN_HB_i_4(name_pair):
 	mean_distance = 7.20
 	tol_distance = 0.70
 	return math.exp(-0.5*(distance_matrix[name_pair]-mean_distance)**2/tol_distance**2)
+
+###############
+## defining probabilities for different distances in antiparallel beta sheet structure
+## residue backbones are typed by (HN, HA) distance <= 3.0 angstrom with tolerance of 0.25 angstrom
+## output of the algorithm should be the probability of two roots to be adjacent,given the distance matrix
+
+def prob_a_beta(root_1,root_2):
+	
+	def P_i_j(root_1,root_2):
+		'''suppose that root_1,root_2 at position i and j'''
+		P_i_j = exp(-0.5*(distance_matrix[(root_1.HA,root_2.HA)]-7.30)**2./0.42**2.)*\
+				exp(-0.5*(distance_matrix[(root_1.HN,root_2.HN)]-3.04)**2./0.62**2.)*\
+				exp(-0.5*(distance_matrix[(root_1.HA,root_2.HN)]-4.98)**2./0.63**2.)*\
+				exp(-0.5*(distance_matrix[(root_1.HN,root_2.HA)]-4.83)**2./0.33**2.)
+		return P_i_j
+		
+	def P_i_j_plus_1(root_1, root_2):
+		'''suppose that root_1, root_2 at position i and j+1'''
+		P_i_j_plus_1 = exp(-0.5*(distance_matrix[(root_1.HA, root_2.HN)]-7.79)**2./0.45**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HA, root_2.HA)]-6.31)**2./0.64**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HA)]-3.71)**2./0.48**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HN)]-5.05)**2./0.28**2.)
+		return P_i_j_plus_1
+	
+	def P_i_minus_1_j(root_1, root_2):
+		'''suppose that root_1, root_2 at position i-1 and j'''
+		P_i_minus_1_j = exp(-0.5*(distance_matrix[(root_1.HA, root_2.HA)]-5.65)**2./0.51**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HA, root_2.HN)]-4.68)**2./0.62**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HN)]-7.00)**2./0.76**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HA)]-8.27)**2./0.66**2.)
+		return P_i_minus_1_j
+	
+	def P_i_minus_1_j_plus_1(root_1, root_2):
+		'''suppose that root_1, root_2 at position i-1 and j+1'''
+		P_i_minus_1_j_plus_1 = exp(-0.5*(distance_matrix[(root_1.HA, root_2.HA)]-2.68)**2./0.67**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HA, root_2.HN)]-5.02)**2./0.54**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HA)]-4.91)**2./0.58**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HN)]-7.55)**2./0.61**2.)
+		return P_i_minus_1_j_plus_1
+	
+	def P_i_minus_1_j_plus_2(root_1, root_2):
+		'''suppose that root_1, root_2 at position i-1 and j+2'''
+		P_i_minus_1_j_plus_2 = exp(-0.5*(distance_matrix[(root_1.HA, root_2.HA)]-6.32)**2./0.65**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HA, root_2.HN)]-3.76)**2./0.69**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HA)]-7.75)**2./0.66**2.)*\
+					exp(-0.5*(distance_matrix[(root_1.HN, root_2.HN)]-5.07)**2./0.60**2.)
+		return P_i_minus_1_j_plus_2
+	
+	P_adj = 0.0
+
+	for key_root in dict_roots.keys():
+		root_ = dict_roots[key_root]
+		P_adj+=P_i_j_plus_1(root_1, root_)+P_i_minus_1_j_plus_1(root_, root_2)
+		P_adj+=P_i_j_plus_1(root_2, root_)+P_i_minus_1_j_plus_1(root_, root_1)
+		P_adj+=P_i_j(root_1, root_)+P_i_minus_1_j(root_2, root_)
+		P_adj+=P_i_j(root_2, root_)+P_i_minus_1_j(root_1, root_)
+	
+	return P_adj
+	
+# for parallel beta sheet secondary structure
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
