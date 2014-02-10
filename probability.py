@@ -276,7 +276,37 @@ def prob_p_beta(root_1, root_2):
 	
 	
 	
-	
+min_HA, max_HA = 100.0, 0.0
+min_HN, max_HN = 100.0, 0.0
+
+for key_root_1 in dict_roots.keys():
+	root_HN_1 = re.split('_',key_root_1[0])[1]
+	root_HA_1 = re.split('_',key_root_1[1])[1]
+	for key_root_2 in dict_roots.keys():
+		root_HN_2 = re.split('_', key_root_2[0])[1]
+		root_HA_2 = re.split('_', key_root_2[1])[1]
+		if int(root_HA_2) - int(root_HA_1) == 1 and int(root_HN_2)-int(root_HN_1)==1:
+			print key_root_1, key_root_2, '%.4f %.4f'%(dict_distance_bb[(key_root_1[0], key_root_2[1])],\
+					dict_distance_bb[(key_root_1[1], key_root_2[0])])
+					
+			if dict_distance_bb[(key_root_1[0], key_root_2[1])] > max_HN: 
+				max_HN = dict_distance_bb[(key_root_1[0], key_root_2[1])] 
+			else: pass
+		
+			if dict_distance_bb[(key_root_1[0], key_root_2[1])] < min_HN:
+				min_HN = dict_distance_bb[(key_root_1[0], key_root_2[1])]
+			else: pass
+		
+			if dict_distance_bb[(key_root_1[1], key_root_2[0])] > max_HA:
+				max_HA = dict_distance_bb[(key_root_1[1], key_root_2[0])]
+			else: pass
+			
+			if dict_distance_bb[(key_root_1[1], key_root_2[0])] < min_HA:
+				min_HA = dict_distance_bb[(key_root_1[1], key_root_2[0])]
+			else: pass
+
+print min_HA, max_HA
+print min_HN, max_HN
 	
 	
 	
