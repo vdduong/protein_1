@@ -264,6 +264,9 @@ def prob_a_beta(root_1,root_2):
 	return P_adj
 	
 # for parallel beta sheet secondary structure
+def prob_p_beta(root_1, root_2):
+	def prob_i_j(root_1, root_2):
+		P_i_j = exp()
 	
 	
 	
